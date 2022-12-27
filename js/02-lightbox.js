@@ -14,7 +14,7 @@ galleryItems.forEach((el) => {
 
   const galleryItem = `
     <a class="gallery__item" href="${original}">
-      <img class="gallery__image" src="${preview}" alt="${description}" />
+      <img class="gallery__image" src="${preview}" alt="${description}"/>
     </a>
   `;
   galleryEl.insertAdjacentHTML('beforeend', galleryItem);
@@ -28,6 +28,12 @@ const handleOpenGallery = (event) => {
   if (target.nodeName !== 'IMG') {
     return;
   }
+
+  let lightbox = new SimpleLightbox('.gallery a', {
+    captionsData: 'alt',
+    captionPosition: 'bottom',
+    captionDelay: 250,
+  });
 };
 
 galleryEl.addEventListener('click', handleOpenGallery);

@@ -1,12 +1,6 @@
 import { galleryItems } from './gallery-items.js';
 // Change code below this line
 
-console.log(galleryItems);
-
-var lightbox = new SimpleLightbox('.gallery a', {
-  /* options */
-});
-
 const galleryEl = document.querySelector('.gallery');
 
 galleryItems.forEach((el) => {
@@ -17,23 +11,12 @@ galleryItems.forEach((el) => {
       <img class="gallery__image" src="${preview}" alt="${description}"/>
     </a>
   `;
+
   galleryEl.insertAdjacentHTML('beforeend', galleryItem);
 });
 
-const handleOpenGallery = (event) => {
-  event.preventDefault();
-
-  const { target } = event;
-
-  if (target.nodeName !== 'IMG') {
-    return;
-  }
-
-  let lightbox = new SimpleLightbox('.gallery a', {
-    captionsData: 'alt',
-    captionPosition: 'bottom',
-    captionDelay: 250,
-  });
-};
-
-galleryEl.addEventListener('click', handleOpenGallery);
+new SimpleLightbox('.gallery a', {
+  captionsData: 'alt',
+  captionPosition: 'bottom',
+  captionDelay: 250,
+});

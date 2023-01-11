@@ -33,12 +33,12 @@ const handleOpenOriginal = (event) => {
   const instance = basicLightbox.create(`<img src="${target.dataset.source}">`);
 
   instance.show();
-
-  document.addEventListener('keydown', (event) => {
-    if (event.code === 'Escape') {
-      instance.close();
-    }
-  });
 };
+
+// document.addEventListener('keydown', (event) => {
+//   if (event.code === 'Escape') {
+//     instance.close();
+//   }
+// });
 
 galleryEl.addEventListener('click', handleOpenOriginal);

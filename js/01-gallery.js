@@ -5,10 +5,8 @@ console.log(galleryItems);
 
 const galleryEl = document.querySelector('.gallery');
 
-galleryItems.forEach((el) => {
-  const { preview, original, description } = el;
-
-  const galleryItem = `<div class="gallery__item">
+const makeGalleryItem = ({ preview, original, description } = {}) => {
+  return `<div class="gallery__item">
       <a class="gallery__link" href="${preview}">
         <img
           class="gallery__image"
@@ -18,8 +16,11 @@ galleryItems.forEach((el) => {
         />
       </a>
     </div>`;
-  galleryEl.insertAdjacentHTML('beforeend', galleryItem);
-});
+};
+
+const galleryCards = galleryItems.map((el) => makeGalleryItem(el)).join('');
+
+galleryEl.innerHTML = galleryCards;
 
 const handleOpenOriginal = (event) => {
   event.preventDefault();
@@ -30,15 +31,26 @@ const handleOpenOriginal = (event) => {
     return;
   }
 
-  const instance = basicLightbox.create(`<img src="${target.dataset.source}">`);
+  const instance = basicLightbox.create(
+    `<img src="${target.dataset.source}">`,
+    {
+      onShow: (instance) => {
+        document.addEventListener('keydown', onEscapeBtnPress);
+      },
+
+      onClose: (instance) => {
+        document.removeEventListener('keydown', onEscapeBtnPress);
+      },
+    }
+  );
 
   instance.show();
-};
 
-// document.addEventListener('keydown', (event) => {
-//   if (event.code === 'Escape') {
-//     instance.close();
-//   }
-// });
+  function onEscapeBtnPress(event) {
+    if (event.code === 'Escape') {
+      instance.close();
+    }
+  }
+};
 
 galleryEl.addEventListener('click', handleOpenOriginal);
